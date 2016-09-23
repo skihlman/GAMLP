@@ -20,4 +20,6 @@ public class NeuronNet {
                 neuron[l][n] = new Neuron();
         }
     }
+    
+    
 }
