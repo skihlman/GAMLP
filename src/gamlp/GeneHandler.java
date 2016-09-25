@@ -39,14 +39,20 @@ public class GeneHandler {
     public static ArrayList<ArrayList<ArrayList<Double>>> getWeightArray(Chromosome chromosome) {
         ArrayList<ArrayList<ArrayList<Double>>> weights = new ArrayList<>();
         int layer = 0;
+        int neuronsInPrevLayer = 0;
         while (!chromosome.sequenceShift()) {
-            int neuron = 0;
+            int neuronCount = 0;
+            int maxConnectionsInLayer = 0;
             while (!chromosome.sequenceShift()) {
+                int connections = 0;
                 while (!chromosome.sequenceShift()) {
-                    weights.get(layer).get(neuron).add(chromosome.nextGene());
+                    double connection = chromosome.nextGene();
+                    if (neuronCount)
+                    weights.get(layer).get(neuronCount).add(connection);
                 }
-                neuron++;
+                neuronCount++;
             }
+            neuronsInPrevLayer = neuronCount;
             layer++;
         }
         return weights;
