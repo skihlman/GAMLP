@@ -40,18 +40,43 @@ public class GeneHandler {
         ArrayList<ArrayList<ArrayList<Double>>> weights = new ArrayList<>();
         int layer = 0;
         int neuronsInPrevLayer = 0;
+        int maxConnectionsInPrevLayer = 0;
+        // Loop through layers
         while (!chromosome.sequenceShift()) {
             int neuronCount = 0;
-            int maxConnectionsInLayer = 0;
+            int maxConnectionsInThisLayer = 0;
+            // Add layer
+            weights.add(new ArrayList<ArrayList<Double>>());
+            // Loopthrough neurons in layer
             while (!chromosome.sequenceShift()) {
-                int connections = 0;
-                while (!chromosome.sequenceShift()) {
-                    double connection = chromosome.nextGene();
-                    if (neuronCount)
-                    weights.get(layer).get(neuronCount).add(connection);
+                int connectionCount = 0;
+                // Add new neurons only if there are connections to it from
+                // previuos layer
+                if (neuronCount < maxConnectionsInPrevLayer || layer == 0) {
+                    // Add neuron
+                    weights.get(layer).add(new ArrayList<Double>());
+                    // Loop through connections from this neuron
+                    while (!chromosome.sequenceShift()) {
+                        weights.get(layer).get(neuronCount).add(chromosome.nextGene());
+                        connectionCount++;
+                    }
                 }
                 neuronCount++;
+                // Keep track of the maximum number of connections in this layer
+                if (connectionCount > maxConnectionsInThisLayer) 
+                    maxConnectionsInThisLayer = connectionCount;
             }
+            // Loop through previous layer and delete connections that don't 
+            // connect to a neuron in this layer
+            if (layer > 0) {
+                for (ArrayList<Double> neuron : weights.get(layer - 1)) {
+                    while (neuron.size() > neuronCount)
+                        neuron.remove(neuronCount);                
+                }
+            }
+            // Save the maximum number of connections in this layer before
+            // moving to next layer
+            maxConnectionsInPrevLayer = maxConnectionsInThisLayer;
             neuronsInPrevLayer = neuronCount;
             layer++;
         }
