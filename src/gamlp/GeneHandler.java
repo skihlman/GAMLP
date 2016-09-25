@@ -39,7 +39,6 @@ public class GeneHandler {
     public static ArrayList<ArrayList<ArrayList<Double>>> getWeightArray(Chromosome chromosome) {
         ArrayList<ArrayList<ArrayList<Double>>> weights = new ArrayList<>();
         int layer = 0;
-        int neuronsInPrevLayer = 0;
         int maxConnectionsInPrevLayer = 0;
         // Loop through layers
         while (!chromosome.sequenceShift()) {
@@ -77,7 +76,6 @@ public class GeneHandler {
             // Save the maximum number of connections in this layer before
             // moving to next layer
             maxConnectionsInPrevLayer = maxConnectionsInThisLayer;
-            neuronsInPrevLayer = neuronCount;
             layer++;
         }
         return weights;
