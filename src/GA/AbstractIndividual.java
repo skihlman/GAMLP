@@ -10,5 +10,7 @@ package GA;
  * @author sebastian
  */
 public abstract class AbstractIndividual {
-    
+    public double fitness() {
+        return 1;
+    }
 }
