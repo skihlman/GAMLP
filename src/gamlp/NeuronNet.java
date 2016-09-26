@@ -12,6 +12,7 @@ package gamlp;
 public class NeuronNet {
     private Neuron[][] neuron;
     
+    // Constructor
     NeuronNet(WeightArray weights) {
         int[] npl = weights.getNPL();
         neuron = new Neuron[npl.length][];
@@ -33,6 +34,8 @@ public class NeuronNet {
             }
         }
     }
+    
+    // Get an output
     
     
 }

@@ -9,7 +9,7 @@ package gamlp;
  *
  * @author sebastian
  */
-public class BitString {
+public class BitString extends AbstractChromosome {
     String bitString;
     
     BitString() {

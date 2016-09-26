@@ -12,7 +12,7 @@ import java.util.ArrayList;
  *
  * @author sebastian
  */
-public class GeneHandler {
+public class GeneHandler extends AbstractGeneHandler {
     public static final int DEFAULT_GENE_LENGTH = 16;
     
     public static final double P_MUTATE_SHRINK = 0.2;
