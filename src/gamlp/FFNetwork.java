@@ -9,11 +9,10 @@ package gamlp;
  *
  * @author sebastian
  */
-public class FFNetwork {
-    private WeightArray weights;
+public class FFNetwork extends NeuronNet{
     
     FFNetwork(Chromosome chromosome) {
-        weights = new WeightArray(chromosome);
+        super(new WeightArray(chromosome));
     }
     
     
