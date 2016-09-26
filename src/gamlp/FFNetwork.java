@@ -12,7 +12,7 @@ package gamlp;
 public class FFNetwork extends NeuronNet{
     
     FFNetwork(Chromosome chromosome) {
-        super(new WeightArray(chromosome));
+        super(chromosome);
     }
     
     
