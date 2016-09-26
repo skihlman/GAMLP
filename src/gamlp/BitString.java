@@ -5,6 +5,8 @@
  */
 package gamlp;
 
+import GA.AbstractChromosome;
+
 /**
  *
  * @author sebastian

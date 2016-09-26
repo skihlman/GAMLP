@@ -5,6 +5,7 @@
  */
 package gamlp;
 
+import GA.AbstractGeneHandler;
 import static gamlp.Chromosome.NEXT_SEQUENCE;
 import java.util.ArrayList;
 
@@ -81,7 +82,7 @@ public class GeneHandler extends AbstractGeneHandler {
         return weights;
     }
     
-    // Creates a new instance of the chromosome given as argument
+    // Creates and returns a new instance of the chromosome given as argument
     public static Chromosome clone(Chromosome parent) {
         return new Chromosome(parent.toString());
     }

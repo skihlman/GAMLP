@@ -5,11 +5,13 @@
  */
 package gamlp;
 
+import GA.AbstractIndividual;
+
 /**
  *
  * @author sebastian
  */
-public class NeuronNet {
+public class NeuronNet extends AbstractIndividual {
     private Neuron[][] neuron;
     
     // Constructor
