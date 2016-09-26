@@ -5,6 +5,7 @@
  */
 package gamlp;
 
+import GA.AbstractChromosome;
 import GA.AbstractGeneHandler;
 import static gamlp.Chromosome.NEXT_SEQUENCE;
 import java.util.ArrayList;
@@ -140,5 +141,21 @@ public class GeneHandler extends AbstractGeneHandler {
             return "0";
         else
             return "1";
+    }
+
+    
+    @Override
+    public AbstractChromosome clone(AbstractChromosome parent) {
+        return this.clone((Chromosome)parent);
+    }
+
+    @Override
+    public AbstractChromosome mutate(AbstractChromosome orig) {
+        return this.mutate((Chromosome)orig);
+    }
+
+    @Override
+    public AbstractChromosome recombine(AbstractChromosome parent1, AbstractChromosome parent2) {
+        return this.recombine((Chromosome)parent1, (Chromosome)parent2);
     }
 }

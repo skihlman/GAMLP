@@ -10,11 +10,8 @@ package GA;
  * @author sebastian
  */
 public abstract class AbstractIndividual {
-    public AbstractIndividual(AbstractChromosome chromosome) {
-        
-    }
     
-    public double fitness() {
-        return 1;
-    }
+    public abstract double fitness();
+    
+    public abstract boolean isViable();
 }

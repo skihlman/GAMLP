@@ -16,7 +16,6 @@ public class NeuronNet extends AbstractIndividual {
     
     // Constructor
     NeuronNet(Chromosome chromosome) {
-        super(chromosome);
         WeightArray weights = new WeightArray(chromosome);
         int[] npl = weights.getNPL();
         neuron = new Neuron[npl.length][];
@@ -40,6 +39,46 @@ public class NeuronNet extends AbstractIndividual {
     }
     
     // Get an output
+    public double[] getOutput(double[] input) {
+        int layers = numLayers();
+        // Create the output array        
+        double[] out = new double[neuronsInLayer(layers - 1)];
+        // Add the inputs
+        for (int n = 0; n < neuron[0].length; n++)
+            neuron[0][n].addLoad(input[n]);
+        // feed the signal through the network
+        for (int l = 0; l < neuron.length; l++){
+            for (int n = 0; n < neuron[l].length; n++) {
+                neuron[l][n].push();
+            }
+        }
+        // Get the output from the output layer
+        for (int n = 0; n < neuronsInLayer(layers - 1); n++)
+            out[n] = neuron[layers - 1][n].getLoad();
+        return out;
+    }
     
+    public int numLayers() {
+        return neuron.length;
+    }
+    
+    public int neuronsInLayer(int layer) {
+        try {
+            return neuron[layer].length;
+        }
+        catch (Exception e) {
+            return 0;
+        }
+    }
+
+    @Override
+    public double fitness() {
+        return 0;
+    }
+
+    @Override
+    public boolean isViable() {
+        return true;
+    }
     
 }

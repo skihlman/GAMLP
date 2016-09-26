@@ -38,5 +38,7 @@ public class Neuron {
         load = 0;
     }
     
-    
+    public double getLoad() {
+        return load;
+    }
 }

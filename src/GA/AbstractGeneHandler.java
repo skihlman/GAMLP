@@ -10,15 +10,9 @@ package GA;
  * @author sebastian
  */
 public abstract class AbstractGeneHandler {
-    public AbstractChromosome clone(AbstractChromosome parent) {
-        return null;
-    }
+    public abstract AbstractChromosome clone(AbstractChromosome parent);
     
-    public AbstractChromosome mutate(AbstractChromosome orig) {
-        return null;
-    }
+    public abstract AbstractChromosome mutate(AbstractChromosome orig);
     
-    public AbstractChromosome recombine(AbstractChromosome parent1, AbstractChromosome parent2) {
-        return null;
-    }
+    public abstract AbstractChromosome recombine(AbstractChromosome parent1, AbstractChromosome parent2);
 }
