@@ -9,12 +9,6 @@ package GA;
  *
  * @author sebastian
  */
-public abstract class AbstractIndividual {
-    public AbstractIndividual(AbstractChromosome chromosome) {
-        
-    }
+public class GA {
     
-    public double fitness() {
-        return 1;
-    }
 }

@@ -83,12 +83,12 @@ public class GeneHandler extends AbstractGeneHandler {
     }
     
     // Creates and returns a new instance of the chromosome given as argument
-    public static Chromosome clone(Chromosome parent) {
+    public Chromosome clone(Chromosome parent) {
         return new Chromosome(parent.toString());
     }
     
     // Take a chromosome, mutate it, and return the mutated chromosome
-    public static Chromosome mutate(Chromosome orig) {
+    public Chromosome mutate(Chromosome orig) {
         double p = Math.random();
         int index = (int)(Math.random() * orig.len());
         if (p < P_MUTATE_SHRINK) {
@@ -108,7 +108,7 @@ public class GeneHandler extends AbstractGeneHandler {
     }
     
     // Recombine two chromosomes
-    public static Chromosome recombine(Chromosome parent1, Chromosome parent2) {
+    public Chromosome recombine(Chromosome parent1, Chromosome parent2) {
         String str = "";
         // Handle each gene
         while (!parent1.sequenceShift() || !parent2.sequenceShift()) {

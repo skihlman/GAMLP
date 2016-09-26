@@ -15,7 +15,9 @@ public class NeuronNet extends AbstractIndividual {
     private Neuron[][] neuron;
     
     // Constructor
-    NeuronNet(WeightArray weights) {
+    NeuronNet(Chromosome chromosome) {
+        super(chromosome);
+        WeightArray weights = new WeightArray(chromosome);
         int[] npl = weights.getNPL();
         neuron = new Neuron[npl.length][];
         // Looping backwards through layers (to make possible to add weights)

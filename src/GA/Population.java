@@ -48,6 +48,13 @@ public class Population extends ArrayList<AbstractIndividual> {
         return ind;
     }
     
+    @Override
+    public boolean remove(Object e) {
+        boolean retVal = super.remove(e);
+        updateFitnessSum();
+        return retVal;
+    }
+    
     // Update the sum of all individual's fitness
     private void updateFitnessSum() {
         for (AbstractIndividual ind : this)
