@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gamlp;
+package OldUselessCode;
 
 import GA.AbstractChromosome;
 
@@ -101,6 +101,22 @@ public class BitString extends AbstractChromosome {
         for (int i = 1; i < str.length(); i++)
             sum += charToBit(str.charAt(i)) * Math.pow(2, i);
         return (1 - 2 * sign) * sum;
+    }
+
+    @Override
+    public AbstractChromosome clone() {
+        return new BitString(this.bitString);
+    }
+
+    @Override
+    public AbstractChromosome mutate() {
+        // Returns a clone. No mutation at this level.
+        return new BitString(this.bitString);
+    }
+
+    @Override
+    public AbstractChromosome recombine(AbstractChromosome partner) {
+        return new BitString(combine(this.toString(), partner.toString()));
     }
     
 }

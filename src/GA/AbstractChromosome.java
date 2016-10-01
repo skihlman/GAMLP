@@ -10,5 +10,10 @@ package GA;
  * @author sebastian
  */
 public abstract class AbstractChromosome {
+    @Override
+    public abstract AbstractChromosome clone();
     
+    public abstract AbstractChromosome mutate();
+    
+    public abstract AbstractChromosome recombine(AbstractChromosome partner);
 }

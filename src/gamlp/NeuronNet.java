@@ -12,11 +12,11 @@ import GA.AbstractIndividual;
  * @author sebastian
  */
 public class NeuronNet extends AbstractIndividual {
-    private Neuron[][] neuron;
+    private final Neuron[][] neuron;
     
     // Constructor
-    NeuronNet(Chromosome chromosome) {
-        WeightArray weights = new WeightArray(chromosome);
+    NeuronNet(int inputs, int outputs) {
+        WeightArray weights = new WeightArray(inputs, outputs);
         int[] npl = weights.getNPL();
         neuron = new Neuron[npl.length][];
         // Looping backwards through layers (to make possible to add weights)
@@ -24,7 +24,8 @@ public class NeuronNet extends AbstractIndividual {
             neuron[l] = new Neuron[npl[l]];
             // Loop through neurons in layer l
             for (int n = 0; n < neuron[l].length; n++) {
-                neuron[l][n] = new Neuron();
+                neuron[l][n] = (n < neuron[l].length - 1) ? 
+                        new Neuron() : new ThresholdNeuron();
                 // If not in the last layer, add connections to next layer
                 if (l < neuron.length - 1) {
                     // Loop through weights in l, n and add connections

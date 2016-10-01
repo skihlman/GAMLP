@@ -3,24 +3,44 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gamlp;
+package OldUselessCode;
 
 import GA.AbstractChromosome;
-import GA.AbstractGeneHandler;
-import static gamlp.Chromosome.NEXT_SEQUENCE;
 import java.util.ArrayList;
 
 /**
  *
- * @author sebastian
+ * @author Sebastian Kihlman
  */
-public class GeneHandler extends AbstractGeneHandler {
+public class Chromosome extends BitString {
+    public static final double SCALE = 1 / 65536;
+    
+    public static final String NEXT_SEQUENCE = "1111";
+    
+    public static final int BYTE_LENGTH = 8;
+    public static final int GENE_SEPARATOR_LENGTH = NEXT_SEQUENCE.length();
+    
+    private static int position;
+    
+    
     public static final int DEFAULT_GENE_LENGTH = 16;
     
     public static final double P_MUTATE_SHRINK = 0.2;
     public static final double P_MUTATE_GROW = 0.2;
     public static final double P_MUTATE_CHANGE = 0.6;
     
+    // construct the chromosome with an empty string
+    Chromosome() {
+        super();
+        position = 0;
+    }
+    
+    // Construct the chromosome with a string
+    Chromosome(String str) {
+        super(str);
+        position = 0;
+    }
+ 
     // Generate a new NetChromosome based on a 'neurons per layer'-array
     public static Chromosome generate(int[] npl) {
         Chromosome newChromosome = new Chromosome();
@@ -145,17 +165,80 @@ public class GeneHandler extends AbstractGeneHandler {
 
     
     @Override
-    public AbstractChromosome clone(AbstractChromosome parent) {
-        return this.clone((Chromosome)parent);
+    public AbstractChromosome clone() {
+        return this.clone((Chromosome)this);
     }
 
     @Override
-    public AbstractChromosome mutate(AbstractChromosome orig) {
-        return this.mutate((Chromosome)orig);
+    public AbstractChromosome mutate() {
+        return this.mutate((Chromosome)this);
     }
 
     @Override
-    public AbstractChromosome recombine(AbstractChromosome parent1, AbstractChromosome parent2) {
-        return this.recombine((Chromosome)parent1, (Chromosome)parent2);
+    public AbstractChromosome recombine(AbstractChromosome partner) {
+        return this.recombine((Chromosome)this, (Chromosome)partner);
+    }
+    
+    // push reading position forward 'steps'-number of steps
+    private void push(int steps) {
+        position += Math.min(steps, len() - position);
+    }
+    
+    // Push reading position forward one step
+    private void push() {
+        push(1);
+    }
+    
+    // Push reading position forward according to the length of 'gene separator'
+    public void shift() {
+        push(GENE_SEPARATOR_LENGTH);
+    }
+    
+    // Check if the next bits equals the sequence shift operator
+    public boolean sequenceShift() {
+        if (len() - position < GENE_SEPARATOR_LENGTH)
+            return false;
+        String str = bitString.substring(position, position + GENE_SEPARATOR_LENGTH);
+        return str.equals(NEXT_SEQUENCE);
+    }
+    
+    // are there still genes (or shifts) to process?
+    public boolean endOfChromosome() {
+        return position < len();
+    }
+    
+    // Get the next gene as a double
+    public double nextGene() {
+        return toDouble(nextGeneStr());
+    }
+    
+    // Get the next gene as a string
+    public String nextGeneStr()  {
+        String str = "";
+        while (!endOfChromosome() && !sequenceShift()) {
+            str += bitString.substring(position, position + 1);
+            push();
+        }
+        // Shift only if we actually got a new gene. 
+        // Otherwise shifting must be done manually
+        if (str.length() > 0)
+            shift();
+        return str;
+    }
+    
+    // get the current position of the taperhead 'position'
+    public int getPos() {
+        return position;
+    }
+    
+    // restore the reading position to zero
+    public void restore() {
+        position = 0;
+    }
+        
+    // Convert a string to double scaled with SCALE
+    public static double toDouble(String str) {
+        int iVal = toInt(str);
+        return (double)iVal * SCALE;        
     }
 }

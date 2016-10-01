@@ -17,13 +17,34 @@ public class GAMLP_tester {
     
     // This method contains the current code to be tested. Change as you like
     public static void nonsenseTestCode() {
-        String str = "110";
-        int sum = 0;
-        for (int i = 0; i < str.length(); i++) {
-            char c = str.charAt(i);
-            int iVal = c - '0';
-            sum += iVal * Math.pow(2, i);
+        /*double[] val = new double[1000];
+        for (int i = 0; i < 1000; i++) {
+            val[i] = helpFunction.Distribution.normal();
+            System.out.println(val[i]);
         }
-        System.out.println(sum);
+        // Check cdf
+        System.out.println("CDF:");
+        for (double x = -2; x <= 2; x += 0.1) {
+            double p = (double)countSmaller(x, val) / 1000;
+            //System.out.println(x + ": " + p);
+            for (double dp = 0; dp < p; dp += 0.01)
+                System.out.print("|");
+            System.out.println();
+        }*/
+        
+        NeuronNet net = new NeuronNet(3, 3);
+        double[] in = new double[]{0, 0, 0};
+        double[] out = net.getOutput(in);
+        for (double d : out)
+            System.out.println(d + " ");
+                
+    }
+    
+    private static int countSmaller(double x, double[] val) {
+        int sum = 0;
+        for (int i = 0; i < val.length; i++)
+            if (val[i] < x)
+                sum++;
+        return sum;
     }
 }

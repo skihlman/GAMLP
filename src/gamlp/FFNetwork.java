@@ -5,14 +5,16 @@
  */
 package gamlp;
 
+import OldUselessCode.Chromosome;
+
 /**
  *
  * @author sebastian
  */
 public class FFNetwork extends NeuronNet{
     
-    FFNetwork(Chromosome chromosome) {
-        super(chromosome);
+    FFNetwork(int inputs, int outputs) {
+        super(inputs, outputs);
     }
     
     
