@@ -5,7 +5,6 @@
  */
 package gamlp;
 
-import OldUselessCode.Chromosome;
 
 /**
  *

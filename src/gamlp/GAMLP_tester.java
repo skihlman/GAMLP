@@ -12,7 +12,15 @@ package gamlp;
 public class GAMLP_tester {
     
     public static void main(String[] args) {
-        nonsenseTestCode();
+        //nonsenseTestCode();
+        final TestGUI GUI = new TestGUI();
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                GUI.setVisible(true);
+            }
+        });
     }
     
     // This method contains the current code to be tested. Change as you like

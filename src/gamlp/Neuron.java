@@ -32,7 +32,7 @@ public class Neuron {
     
     public void push() {
         for (Connection con : connections) {
-            con.push(load);
+            con.push(activationFunction());
         }
         lastLoad = load;
         load = 0;
@@ -40,5 +40,11 @@ public class Neuron {
     
     public double getLoad() {
         return load;
+    }
+    
+    // The activationFunction of the neuron
+    private double activationFunction() {
+        // This basic neuron has a linear activation function
+        return load > 0 ? load : 0;        
     }
 }
