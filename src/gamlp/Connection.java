@@ -21,4 +21,8 @@ public class Connection {
     public void push(double load) {
         target.addLoad(load * weight);
     }
+    
+    public double getWeight() {
+        return weight;
+    }
 }

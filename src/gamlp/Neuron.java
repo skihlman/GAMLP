@@ -42,6 +42,13 @@ public class Neuron {
         return load;
     }
     
+    public double[] getWeightArray() {
+        double[] weights = new double[connections.size()]; 
+        for (int i = 0; i < weights.length; i++)
+            weights[i] = connections.get(i).getWeight();
+        return weights;
+    }
+    
     // The activationFunction of the neuron
     private double activationFunction() {
         // This basic neuron has a linear activation function

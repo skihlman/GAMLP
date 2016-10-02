@@ -1,5 +1,9 @@
 package gamlp;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -11,13 +15,17 @@ package gamlp;
  * @author sebastian
  */
 public class NetworkIllustrator extends javax.swing.JPanel {
+    // The network to be illustrated
+    private NeuronNet net;
 
     /**
      * Creates new form NetworkIllustrator
      * @param net
      */
     public NetworkIllustrator(NeuronNet net) {
+        this.net = net;
         initComponents();
+        setInputFields();
     }
 
     /**
@@ -29,7 +37,9 @@ public class NetworkIllustrator extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setBackground(new java.awt.Color(204, 204, 255));
+        setBackground(new java.awt.Color(255, 255, 255));
+        setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder("Neural Net Illustrator")));
+        setAutoscrolls(true);
         addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 formKeyPressed(evt);
@@ -40,11 +50,11 @@ public class NetworkIllustrator extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 390, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 278, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -55,4 +65,112 @@ public class NetworkIllustrator extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
+
+    private javax.swing.JTextField[] txtInput;
+    
+    private void txtInputActionPerformed(java.awt.event.ActionEvent evt) {                                            
+        // TODO add your handling code here:
+    }
+    
+    public void drawNet(Graphics g) {
+        int xMid = this.getWidth() / 2;
+        int yMid = this.getHeight() / 2;
+        int layers = net.numLayers();
+        int maxNeurons = 0;
+        for (int i = 0; i < layers; i++) {
+            if (net.neuronsInLayer(i) > maxNeurons)
+                maxNeurons = net.neuronsInLayer(i);
+        }
+        int xStep = (int)(1.8 * xMid / layers);
+        int yStep = (int)(1.8 * yMid / maxNeurons);
+        int xStart = (int)(xMid * 0.1 + xStep / 2);
+        int yStart = (int)(yMid * 0.1 + yStep / 2);
+        int radius = (int) (0.4 * Math.min(xStep, yStep));
+        // Loop through layers of net
+        for (int l = 0; l < layers; l++){
+            int x1 = xStart + xStep * l;
+            int numNeurons = net.neuronsInLayer(l);
+            // loop through neurons in layer l
+            for (int n = 0; n < numNeurons; n++) {
+                int y1 = (int)(yMid - yStep * (double)numNeurons / 2 + yStep * n + yStep / 2);
+                // Set color depending on type of neuron to be drawn
+                if (n < numNeurons - 1 || l == layers - 1) 
+                    g.setColor(new Color(16, 32, 16));
+                else
+                    g.setColor(new Color(180, 120, 180));
+                // Draw neuron n in layer l
+                g.drawOval(x1 - radius, y1 - radius, 2 * radius, 2 * radius);
+                // Draw connections (if not in last layer)
+                if (l < layers - 1) {
+                    int x2 = x1 + xStep;
+                    // Get the weights from the current neuron
+                    double[] weights = net.getNeuron(l, n).getWeightArray();
+                    // Loop through connections from neuron n in layer l
+                    for (int c = 0; c < weights.length; c++) {
+                        g.setColor(getWeightColor(weights[c]));
+                        int numNeur2 = net.neuronsInLayer(l + 1);
+                        int y2 = (int)(yMid - yStep * (double) numNeur2 / 2 + yStep * c + yStep / 2);
+                        g.drawLine(x1, y1, x2, y2);
+                        g.setColor(getWTextColor(weights[c]));
+                        g.setFont(g.getFont().deriveFont(8));
+                        int dy = (int)(yStep / 2 * (c - weights.length / 2) / weights.length);
+                        g.drawString(("" + weights[c]).substring(0, 5), 
+                                (int)(0.8 * x1 + 0.2 * x2), 
+                                (int)(0.8 * y1 + 0.2 * y2 /*+ dy*/));
+                    }
+                }
+            }
+        }
+    }
+    
+    public static Color getWeightColor(double w) {
+        int byteVal = (int)(200 / (1 + Math.abs(w)));
+        int red = w > 0 ? 255 : byteVal;
+        int green = byteVal;
+        int blue = w > 0 ? byteVal : 255;
+        return new Color(red, green, blue);
+    }
+    
+    public static Color getWTextColor(double w) {
+        int byteVal = (int)(60 / (1 + Math.abs(w)));
+        int red = w > 0 ? 200 : byteVal;
+        int green = byteVal;
+        int blue = w > 0 ? byteVal : 200;
+        return new Color(red, green, blue);
+    }
+    
+    private void setInputFields() {
+        int numInputs = net.neuronsInLayer(0);
+        int yMid = this.getHeight() / 2;
+        int layers = net.numLayers();
+        int maxNeurons = 0;
+        for (int i = 0; i < layers; i++) {
+            if (net.neuronsInLayer(i) > maxNeurons)
+                maxNeurons = net.neuronsInLayer(i);
+        }
+        int yStep = (int)(1.8 * yMid / maxNeurons);
+        int xStart = 8;
+        int yStart = (int)(yMid - yStep * (double)(numInputs - 1) / 2 + yStep / 2);
+        txtInput = new javax.swing.JTextField[numInputs];
+        for (javax.swing.JTextField txt : txtInput) {
+            txt = new javax.swing.JTextField();
+        
+            txt.setText("0");
+            txt.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    txtInputActionPerformed(evt);
+                }
+            });
+            this.add(txt, xStart, yStart + yStep);
+        }        
+        
+    }
+    
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        drawNet(g);
+        //g.drawString("BLAH", 20, 20);
+        //g.drawRect(200, 200, 200, 200);
+    }
 }

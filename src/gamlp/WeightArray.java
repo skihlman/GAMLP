@@ -48,7 +48,8 @@ public class WeightArray extends AbstractChromosome {
             weights.add(new ArrayList<ArrayList<Double>>());
             for (int n = 0; n < npl[l]; n++) {
                 weights.get(l).add(new ArrayList<Double>());
-                for (int c = 0; c < npl[l + 1]; c++) {
+                int thInNextLayer = l < layers - 2 ? 1 : 0;
+                for (int c = 0; c < npl[l + 1] - thInNextLayer; c++) {
                     double w = Distribution.normal(WEIGHT_MEAN, WEIGHT_SD);
                     weights.get(l).get(n).add(w);
                 }
@@ -86,8 +87,8 @@ public class WeightArray extends AbstractChromosome {
         int npl[];
         int layers = weights.size() + 1;
         npl = new int[layers];
-        npl[0] = inputs;
-        for (int i = 1; i < layers - 1; i++)
+        //npl[0] = inputs;
+        for (int i = 0; i < layers - 1; i++)
             npl[i] = weights.get(i).size();
         npl[layers - 1] = outputs;
         return npl;

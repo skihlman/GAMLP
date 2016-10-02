@@ -59,6 +59,15 @@ public class NeuronNet extends AbstractIndividual {
         return out;
     }
     
+    public Neuron getNeuron(int layer, int neuron) {
+        try {
+            return this.neuron[layer][neuron];
+        }
+        catch (Exception e) {
+            return null;
+        }
+    }
+    
     public int numLayers() {
         return neuron.length;
     }
