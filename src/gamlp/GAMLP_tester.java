@@ -18,6 +18,8 @@ public class GAMLP_tester {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
+                NeuronNet net = new NeuronNet(3, 2);
+                GUI.showNetwork(net);
                 GUI.setVisible(true);
             }
         });
