@@ -10,11 +10,18 @@ package gamlp;
  * @author sebastian
  */
 public class InputNeuron extends Neuron {
-    @Override
+    /*@Override
     public void push() {
         for (Connection con : connections) {
             con.push(super.getLoad(true));
         }
         clear();
+    }*/
+    
+    // The activationFunction of the neuron
+    @Override
+    public double activationFunction() {
+        // Input neurons just pass the value further
+        return super.getLoad(true);        
     }
 }
