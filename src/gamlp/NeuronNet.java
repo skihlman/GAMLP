@@ -39,13 +39,21 @@ public class NeuronNet extends AbstractIndividual {
         }
     }
     
+    public int numInputs() {
+        return neuronsInLayer(0) - 1; // - Threshold neuron
+    }
+    
+    public int numOutputs() {
+        return neuronsInLayer(numLayers() - 1);
+    }
+    
     // Get an output
     public double[] getOutput(double[] input) {
         int layers = numLayers();
         // Create the output array        
         double[] out = new double[neuronsInLayer(layers - 1)];
         // Add the inputs
-        for (int n = 0; n < neuron[0].length; n++)
+        for (int n = 0; n < input.length; n++)
             neuron[0][n].addLoad(input[n]);
         // feed the signal through the network
         for (int l = 0; l < neuron.length; l++){
