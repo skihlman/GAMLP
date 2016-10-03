@@ -34,12 +34,24 @@ public class Neuron {
         for (Connection con : connections) {
             con.push(activationFunction());
         }
-        lastLoad = load;
-        load = 0;
+        clear();
     }
     
     public double getLoad() {
-        return load;
+        return getLoad(false);
+    }
+    
+    public double getLoad(boolean preserveLoad) {
+        double retVal = load;
+        if (!preserveLoad) {
+            clear();
+        }
+        return retVal;
+    }
+    
+    public void clear() {
+        lastLoad = load;
+        load = 0;
     }
     
     public double[] getWeightArray() {
@@ -50,7 +62,7 @@ public class Neuron {
     }
     
     // The activationFunction of the neuron
-    private double activationFunction() {
+    public double activationFunction() {
         // This basic neuron has a linear activation function
         return load > 0 ? load : 0;        
     }

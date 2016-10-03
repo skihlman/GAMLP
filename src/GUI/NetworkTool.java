@@ -51,7 +51,7 @@ public class NetworkTool extends JPanel {
             final int index = i;
             c.gridx = 0;
             c.gridy = i;
-            c.weightx = 0.2;
+            c.weightx = 0.1;
             c.weighty = (double)1 / cols;
             c.anchor = WEST;
             txtInput[i] = new javax.swing.JTextField("0.0", 4);
@@ -80,7 +80,7 @@ public class NetworkTool extends JPanel {
         cI.gridx = 1;
         cI.gridy = 0;
         cI.gridheight = cols;
-        cI.weightx = 0.6;
+        cI.weightx = 0.7;
         cI.weighty = 1;
         this.add(nIllustrator, cI);
         // Set outputFields
@@ -93,6 +93,10 @@ public class NetworkTool extends JPanel {
             c.weighty = (double)1 / cols;
             txtOutput[i] = new javax.swing.JTextField("0.0", 4);
             txtOutput[i].setEditable(false);
+            //txtOutput[i].applyComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+            txtOutput[i].setCaretPosition(0);
+            // Add a document listener to textfield i (checking for non-numerical input)
+            
             this.add(txtOutput[i], c);
         }
         //***
@@ -113,7 +117,7 @@ public class NetworkTool extends JPanel {
                 try {
                     int len = e.getDocument().getLength();
                     String txt = txtF.getText(0, len);
-                    if (!isNumeric(txt)) {
+                    if (!isNumeric(txt) && (txt.length() != 1 || txt.charAt(0) != '-')) {
                         txtF.setText("0.0");
                     }
                     // Remove leading zeros
@@ -150,6 +154,7 @@ public class NetworkTool extends JPanel {
             output = net.getOutput(input);
             for (int i = 0; i < output.length; i++) {
                 txtOutput[i].setText("" + output[i]);
+                txtOutput[i].setCaretPosition(0);
             }
         }
         catch (Exception e) {

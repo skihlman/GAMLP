@@ -18,16 +18,16 @@ public class NeuronNet extends AbstractIndividual {
     public NeuronNet(int inputs, int outputs) {
         WeightArray weights = new WeightArray(inputs, outputs);
         int[] npl = weights.getNPL();
-        neuron = new Neuron[npl.length][];
+        int layers = npl.length;
+        neuron = new Neuron[layers][];
         // Looping backwards through layers (to make possible to add weights)
-        for (int l = neuron.length - 1; l >= 0; l--) {
+        for (int l = layers - 1; l >= 0; l--) {
             neuron[l] = new Neuron[npl[l]];
             // Loop through neurons in layer l
             for (int n = 0; n < neuron[l].length; n++) {
-                neuron[l][n] = (n < neuron[l].length - 1) ? 
-                        new Neuron() : new ThresholdNeuron();
+                neuron[l][n] = getNeuron(npl, l, n);
                 // If not in the last layer, add connections to next layer
-                if (l < neuron.length - 1) {
+                if (l < layers - 1) {
                     // Loop through weights in l, n and add connections
                     for (int c = 0; c < weights.getNumConnections(l, n); c++) {
                         Connection con = new Connection(weights.get(l, n, c), 
@@ -37,6 +37,27 @@ public class NeuronNet extends AbstractIndividual {
                 }
             }
         }
+    }
+    
+    private Neuron getNeuron(int[] npl, int layer, int nNeur) {
+        Neuron neur;
+        if (layer == 0) {
+            if (nNeur == npl[0] - 1)
+                neur = new ThresholdNeuron();
+            else
+                neur = new InputNeuron();
+            
+        }
+        else if (layer == npl.length - 1) {
+            neur = new Neuron();
+        }
+        else {
+            if (nNeur == npl[layer] - 1)
+                neur = new ThresholdNeuron();
+            else
+                neur = new Neuron();
+        }
+        return neur;
     }
     
     public int numInputs() {
@@ -62,7 +83,7 @@ public class NeuronNet extends AbstractIndividual {
             }
         }
         // Get the output from the output layer
-        for (int n = 0; n < neuronsInLayer(layers - 1); n++)
+        for (int n = 0; n < neuronsInLayer(layers - 1); n++) 
             out[n] = neuron[layers - 1][n].getLoad();
         return out;
     }

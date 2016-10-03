@@ -14,12 +14,10 @@ import java.util.ArrayList;
 public class ThresholdNeuron extends Neuron {
     private final double load;
     private final double lastLoad;
-    ArrayList<Connection> connections;
     
     ThresholdNeuron() {
         load = 1;
         lastLoad = 1;
-        connections = new ArrayList<>();
     }
     
     @Override
