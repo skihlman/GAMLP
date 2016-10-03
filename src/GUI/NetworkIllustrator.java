@@ -1,5 +1,6 @@
-package gamlp;
+package GUI;
 
+import gamlp.NeuronNet;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;

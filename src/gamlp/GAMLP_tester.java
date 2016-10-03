@@ -5,6 +5,8 @@
  */
 package gamlp;
 
+import GUI.TestGUI;
+
 /**
  *
  * @author sebastian

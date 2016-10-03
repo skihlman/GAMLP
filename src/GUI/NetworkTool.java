@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gamlp;
+package GUI;
 
+import gamlp.NeuronNet;
 import static helpFunction.Numbers.*;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;

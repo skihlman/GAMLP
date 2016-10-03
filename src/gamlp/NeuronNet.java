@@ -15,7 +15,7 @@ public class NeuronNet extends AbstractIndividual {
     private final Neuron[][] neuron;
     
     // Constructor
-    NeuronNet(int inputs, int outputs) {
+    public NeuronNet(int inputs, int outputs) {
         WeightArray weights = new WeightArray(inputs, outputs);
         int[] npl = weights.getNPL();
         neuron = new Neuron[npl.length][];
@@ -56,7 +56,7 @@ public class NeuronNet extends AbstractIndividual {
         for (int n = 0; n < input.length; n++)
             neuron[0][n].addLoad(input[n]);
         // feed the signal through the network
-        for (int l = 0; l < neuron.length; l++){
+        for (int l = 0; l < layers - 1; l++){
             for (int n = 0; n < neuron[l].length; n++) {
                 neuron[l][n].push();
             }
