@@ -15,7 +15,11 @@ public class Population extends ArrayList<AbstractIndividual> {
     // Sum of all individual's fitness
     private double fitnessSum;
     
-    // 
+    public Population() {
+        super();
+    }
+    
+    // Sort the population in dexcending fitness order
     public void sort(){
         for (int i = 1; i < this.size(); i++) {
             int moveToIndex = i;
@@ -41,6 +45,11 @@ public class Population extends ArrayList<AbstractIndividual> {
         addToFitnessSum(e.fitness());
     }
     
+    public void add(Population pop) {
+        for (AbstractIndividual ind : pop)
+            this.add(ind);
+    }
+    
     @Override
     public AbstractIndividual remove(int index) {
         AbstractIndividual ind = super.remove(index);
@@ -57,24 +66,31 @@ public class Population extends ArrayList<AbstractIndividual> {
     
     // Update the sum of all individual's fitness
     private void updateFitnessSum() {
+        fitnessSum = 0;
         for (AbstractIndividual ind : this)
             fitnessSum += ind.fitness();
     }
     
+    // Add to (or remove from) the population's fitnessSum
     private void addToFitnessSum(double fitness) {
         fitnessSum += fitness;
     }
     
+    
+    
     // Return an individual based on p from a cumulative distribution of fitness
     private AbstractIndividual get(double p) {
-        if (p < 0)
+        if (p < 0 || p > 1)
             return null;
         double fSum = 0;
+        sort();
         for (AbstractIndividual ind : this) {
             fSum += ind.fitness();
             if (p <= fSum / fitnessSum)
                 return ind;
         }
-        return null;
+        // If no individual has been chosen, return the last individual
+        // This sould never happen...
+        return this.get(this.size() - 1);
     }
 }

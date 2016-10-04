@@ -10,5 +10,36 @@ package GA;
  * @author sebastian
  */
 public class GA {
+    // The population on whitch to perform the genetic alghoritm
+    private Population population;
+    private GASettings settings;
+    private int generation;
     
+    public GA(Population pop) {
+        this(pop, new GASettings());
+    }
+    
+    // Constructor
+    public GA(Population pop, GASettings set) {
+        population = pop;
+        settings = set;
+        generation = 0;
+    }
+    
+    public Population getPopulation() {
+        return population;
+    }
+    
+    public GASettings getSettings() {
+        return settings;
+    }
+    
+    public void setPopulation(Population pop) {
+        this.population = pop;
+        generation = 0;
+    }
+    
+    public void set(GASettings set) {
+        this.settings = set;
+    }
 }
