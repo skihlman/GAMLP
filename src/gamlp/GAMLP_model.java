@@ -5,10 +5,13 @@
  */
 package gamlp;
 
+import GA.*;
+
 /**
  *
  * @author sebastian
  */
 public class GAMLP_model {
-    
+    Population population;
+    GA ga;
 }

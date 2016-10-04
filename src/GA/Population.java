@@ -14,9 +14,11 @@ import java.util.ArrayList;
 public class Population extends ArrayList<AbstractIndividual> {
     // Sum of all individual's fitness
     private double fitnessSum;
+    private final double[] constraints;
     
-    public Population() {
+    public Population(double[] constraints) {
         super();
+        this.constraints = constraints;
     }
     
     // Sort the population in dexcending fitness order
@@ -31,23 +33,40 @@ public class Population extends ArrayList<AbstractIndividual> {
             this.add(moveToIndex, this.remove(i));
         }
     }
-
+    
     @Override
     public boolean add(AbstractIndividual e) {
-        boolean success = super.add(e);
-        addToFitnessSum(e.fitness());
+        boolean success = false;
+        if (e.isViable(constraints)) {
+            success = super.add(e);
+        }
+        if (success ) {
+            addToFitnessSum(e.fitness());
+        }
         return success;
     }
     
     @Override
     public void add(int index, AbstractIndividual e) {
-        super.add(index, e);
-        addToFitnessSum(e.fitness());
+        if (e.isViable(constraints)) {
+            super.add(index, e);
+            addToFitnessSum(e.fitness());
+        }
     }
     
     public void add(Population pop) {
         for (AbstractIndividual ind : pop)
             this.add(ind);
+    }
+    
+    @Override
+    public AbstractIndividual set(int index, AbstractIndividual e) {
+        AbstractIndividual retInd = e;
+        if (e.isViable(constraints)) {
+            retInd = super.set(index, e);
+            addToFitnessSum(e.fitness());
+        }
+        return retInd;
     }
     
     @Override

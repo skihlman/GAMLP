@@ -42,4 +42,9 @@ public class GA {
     public void set(GASettings set) {
         this.settings = set;
     }
+    
+    // Perform GA - i.e. a generation shift
+    public void generationShift() {
+        population.sort();
+    }
 }
