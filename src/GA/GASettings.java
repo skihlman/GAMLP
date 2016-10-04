@@ -14,6 +14,8 @@ public class GASettings {
     private double pCrossover;
     private double pClone;
     private double pMutation;
+    // population size
+    public int populationSize;
     // Mutation rates (general applys to all, specific only to mutated individuals)
     public double generalMutationRate;
     public double generalMutationSD;
@@ -54,6 +56,8 @@ public class GASettings {
     public static final double DEFAULT_P_CLONE = 0.18;    
     public static final double DEFAULT_P_MUTATION = 0.02;
     
+    public static final int DEFAULT_POPULATION_SIZE = 100;
+    
     public static final double DEFAULT_GENERAL_MUTATION_RATE = 0.01;
     public static final double DEFAULT_GENERAL_MUTATION_SD = 0.01;
     public static final double DEFAULT_GENERAL_MUTATION_P_STRUCTURE_CHANGE = 0.001;
@@ -82,6 +86,8 @@ public class GASettings {
     public GASettings() {
         // Private main agorithm vars
         setGAProbabilities(DEFAULT_P_CROSSOVER, DEFAULT_P_CLONE, DEFAULT_P_MUTATION);
+        // set size of population
+        populationSize = DEFAULT_POPULATION_SIZE;
         // Mutation rates (general applys to all, specific only to mutated individuals)
         generalMutationRate = DEFAULT_GENERAL_MUTATION_RATE;
         generalMutationSD = DEFAULT_GENERAL_MUTATION_SD;

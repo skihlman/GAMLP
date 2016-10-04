@@ -159,7 +159,7 @@ public class NetworkTool extends JPanel {
         }
         catch (Exception e) {
             // Do nothing...
-            System.out.println("Error:" + e);
+            //System.out.println("Error:" + e);
         }
     }
    

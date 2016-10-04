@@ -39,8 +39,7 @@ public class TestGUI extends javax.swing.JFrame {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        
-        netTool = new NetworkTool((NeuronNet) new NeuronNetFactory(2, 2).create());
+        netTool = new NetworkTool(new NeuronNetFactory(2, 2).create());
         netTool.setPreferredSize(new java.awt.Dimension(600, 300));
         
         this.getContentPane().add(netTool);

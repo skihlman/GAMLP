@@ -14,11 +14,9 @@ import java.util.ArrayList;
 public class Population extends ArrayList<AbstractIndividual> {
     // Sum of all individual's fitness
     private double fitnessSum;
-    private final double[] constraints;
     
-    public Population(double[] constraints) {
+    public Population() {
         super();
-        this.constraints = constraints;
     }
     
     // Sort the population in dexcending fitness order
@@ -94,8 +92,6 @@ public class Population extends ArrayList<AbstractIndividual> {
     private void addToFitnessSum(double fitness) {
         fitnessSum += fitness;
     }
-    
-    
     
     // Return an individual based on p from a cumulative distribution of fitness
     private AbstractIndividual get(double p) {

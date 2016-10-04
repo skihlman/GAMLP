@@ -18,7 +18,8 @@ public class NeuronNet extends AbstractIndividual {
     
     // Constructor
     public NeuronNet(WeightArray w) {
-        
+        weights = w;
+        set();
     }
     
     // Set the network
@@ -26,7 +27,7 @@ public class NeuronNet extends AbstractIndividual {
         int[] npl = weights.getNPL();
         int layers = npl.length;
         neuron = new Neuron[layers][];
-        // Looping backwards through layers (to make possible to add weights)
+        // Looping backwards through layers (to make possible to add forward weights)
         for (int l = layers - 1; l >= 0; l--) {
             neuron[l] = new Neuron[npl[l]];
             // Loop through neurons in layer l

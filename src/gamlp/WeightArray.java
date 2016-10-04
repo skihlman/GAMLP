@@ -60,21 +60,32 @@ public class WeightArray extends AbstractChromosome {
                     weights.get(l).get(n).add(w);
                 }
             }
-        }
-        
+        }        
     }
     
     
     
-    public double get(int layer, int neuron, int weight) {
+    public double get(int layer, int neuron, int weightNum) {
         // Try to return the weight based on layer, neuron and weight no indices
         try {
-            return weights.get(layer).get(neuron).get(weight);
+            return weights.get(layer).get(neuron).get(weightNum);
         }
         // If any of the given layer, neuron and weight indices doesn't exist
         // return 0
         catch (Exception e) {
             return 0;
+        }        
+    }
+    
+    public void set(int layer, int neuron, int weightNum, double weight) {
+        // Try to set the weight based on layer, neuron and weight no indices
+        try {
+            weights.get(layer).get(neuron).set(weightNum, weight);
+        }
+        // If any of the given layer, neuron and weight indices doesn't exist
+        // return 0
+        catch (Exception e) {
+            // Do nothing
         }        
     }
     
@@ -114,18 +125,24 @@ public class WeightArray extends AbstractChromosome {
     }
 
     @Override
-    public AbstractChromosome clone() {
+    public WeightArray recombine(AbstractChromosome partner) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    @Override
+    public WeightArray clone() {
+        WeightArray copy = new WeightArray(this.getNPL());
+        for (int l = 0; l < this.weights.size(); l++)
+            for (int n = 0; n < this.weights.get(l).size(); n++)
+                for (int c = 0; c < this.weights.get(l).get(n).size(); c++)
+                    copy.set(l, n, c, this.get(l, n, c));
+        return copy;
     }
 
     @Override
-    public AbstractChromosome mutate() {
+    public WeightArray mutate() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
-    public AbstractChromosome recombine(AbstractChromosome partner) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
     
 }

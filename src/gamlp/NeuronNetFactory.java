@@ -34,7 +34,7 @@ public class NeuronNetFactory extends AbstractIndividualFactory{
     }
     
     @Override
-    public AbstractIndividual create() {
+    public NeuronNet create() {
         WeightArray weights = new WeightArray(inputs, outputs);
         NeuronNet net = new NeuronNet(weights);
         return net;

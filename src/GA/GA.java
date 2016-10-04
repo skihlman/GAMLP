@@ -12,17 +12,25 @@ package GA;
 public class GA {
     // The population on whitch to perform the genetic alghoritm
     private Population population;
+    private AbstractIndividualFactory factory;
     private GASettings settings;
     private int generation;
     
-    public GA(Population pop) {
-        this(pop, new GASettings());
+    public GA(AbstractIndividualFactory fact) {
+        this(fact, new GASettings());
     }
     
     // Constructor
-    public GA(Population pop, GASettings set) {
-        population = pop;
+    public GA(AbstractIndividualFactory fact, GASettings set) {
+        factory = fact;
         settings = set;
+        generatePopulation();
+    }
+    
+    public final void generatePopulation() {
+        while (population.size() < settings.populationSize) {
+            population.add(factory.create());
+        }
         generation = 0;
     }
     
