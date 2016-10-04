@@ -10,16 +10,11 @@ package GA;
  * @author sebastian
  */
 public abstract class AbstractIndividual {
-    public double[] constraints;
-    
-    public AbstractIndividual() {
-        constraints = new double[0];
-        setConstraints();
-    }
     
     public abstract double fitness();
     
-    public abstract boolean isViable(double[] constraints);
+    public abstract boolean isViable();
     
-    public abstract void setConstraints();
+    public abstract AbstractChromosome getChromosome();
+    
 }

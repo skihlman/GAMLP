@@ -24,10 +24,16 @@ public class WeightArray extends AbstractChromosome {
     public static final double WEIGHT_SD = 0.1;
     public static final double WEIGHT_MEAN = 0;
     
-    WeightArray(int in, int out) {
+    public WeightArray(int in, int out) {
         this.inputs = in;
         this.outputs = out;
         generateWeights(createNPL());
+    }
+    
+    public WeightArray(int[] npl) {
+        this.inputs = npl[0] - 1;   // Disgard threshold neuron
+        this.outputs = npl[npl.length - 1];
+        generateWeights(npl);
     }
     
     private int[] createNPL() {

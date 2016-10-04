@@ -3,18 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gamlp;
-
+package GA;
 
 /**
  *
  * @author sebastian
  */
-public class FFNetwork extends NeuronNet{
-    
-    FFNetwork(int[] npl) {
-        super(new WeightArray(npl));
-    }
-    
-    
+public abstract class AbstractIndividualFactory {
+    public abstract AbstractIndividual create();
 }

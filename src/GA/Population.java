@@ -37,7 +37,7 @@ public class Population extends ArrayList<AbstractIndividual> {
     @Override
     public boolean add(AbstractIndividual e) {
         boolean success = false;
-        if (e.isViable(constraints)) {
+        if (e.isViable()) {
             success = super.add(e);
         }
         if (success ) {
@@ -48,7 +48,7 @@ public class Population extends ArrayList<AbstractIndividual> {
     
     @Override
     public void add(int index, AbstractIndividual e) {
-        if (e.isViable(constraints)) {
+        if (e.isViable()) {
             super.add(index, e);
             addToFitnessSum(e.fitness());
         }
@@ -62,7 +62,7 @@ public class Population extends ArrayList<AbstractIndividual> {
     @Override
     public AbstractIndividual set(int index, AbstractIndividual e) {
         AbstractIndividual retInd = e;
-        if (e.isViable(constraints)) {
+        if (e.isViable()) {
             retInd = super.set(index, e);
             addToFitnessSum(e.fitness());
         }

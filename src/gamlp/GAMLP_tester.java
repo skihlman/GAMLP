@@ -43,7 +43,7 @@ public class GAMLP_tester {
             System.out.println();
         }*/
         
-        NeuronNet net = new NeuronNet(3, 3);
+        NeuronNet net = new NeuronNet(new WeightArray(1, 1));
         double[] in = new double[]{0, 0, 0};
         double[] out = net.getOutput(in);
         for (double d : out)

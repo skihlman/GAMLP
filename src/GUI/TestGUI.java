@@ -6,6 +6,8 @@
 package GUI;
 
 import gamlp.NeuronNet;
+import gamlp.NeuronNetFactory;
+import gamlp.WeightArray;
 
 /**
  *
@@ -38,7 +40,7 @@ public class TestGUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         
-        netTool = new NetworkTool(new NeuronNet(3, 2));
+        netTool = new NetworkTool((NeuronNet) new NeuronNetFactory(2, 2).create());
         netTool.setPreferredSize(new java.awt.Dimension(600, 300));
         
         this.getContentPane().add(netTool);

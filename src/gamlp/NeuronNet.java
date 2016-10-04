@@ -5,6 +5,7 @@
  */
 package gamlp;
 
+import GA.AbstractChromosome;
 import GA.AbstractIndividual;
 
 /**
@@ -13,23 +14,15 @@ import GA.AbstractIndividual;
  */
 public class NeuronNet extends AbstractIndividual {
     private Neuron[][] neuron;
+    private WeightArray weights;
     
     // Constructor
-    public NeuronNet(double[] constraints) {
-        if (constraints.length < 2)
-            set(1, 1);
-        else
-            set((int)constraints[0], (int)constraints[1]);
-    }
-    
-    // Constructor
-    public NeuronNet(int inputs, int outputs) {
-        set(inputs, outputs);
+    public NeuronNet(WeightArray w) {
+        
     }
     
     // Set the network
-    private void set(int in, int out) {
-        WeightArray weights = new WeightArray(in, out);
+    private void set() {
         int[] npl = weights.getNPL();
         int layers = npl.length;
         neuron = new Neuron[layers][];
@@ -133,18 +126,15 @@ public class NeuronNet extends AbstractIndividual {
     }
 
     @Override
-    public boolean isViable(double[] constr) {
-        if (constr.length != this.constraints.length)
-            return false;
-        for (int i = 0; i < this.constraints.length; i++)
-            if (this.constraints[i] != constr[i])
-                return false;
+    public boolean isViable() {
+
         return true;
     }
 
     @Override
-    public void setConstraints() {
-        this.constraints = new double[] {this.numInputs(), this.numOutputs()};
+    public AbstractChromosome getChromosome() {
+        return this.weights;
     }
+
     
 }

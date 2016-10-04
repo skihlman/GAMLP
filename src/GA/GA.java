@@ -47,4 +47,6 @@ public class GA {
     public void generationShift() {
         population.sort();
     }
+    
+    
 }
