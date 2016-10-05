@@ -6,7 +6,8 @@
 package gamlp;
 
 import GA.AbstractIndividual;
-import GA.AbstractIndividualFactory;
+import Forecaster.AbstractIndividualFactory;
+import Forecaster.SaveObject;
 
 /**
  *
@@ -38,6 +39,11 @@ public class NeuronNetFactory extends AbstractIndividualFactory{
         WeightArray weights = new WeightArray(inputs, outputs);
         NeuronNet net = new NeuronNet(weights);
         return net;
+    }
+
+    @Override
+    public AbstractIndividual create(SaveObject saveObject) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

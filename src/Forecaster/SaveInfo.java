@@ -3,12 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package GA;
+package Forecaster;
 
 /**
  *
  * @author sebastian
  */
-public abstract class AbstractIndividualFactory {
-    public abstract AbstractIndividual create();
+public class SaveInfo {
+    public String filename;
+    public String extension;
+    public String URL;
+    
+    
 }

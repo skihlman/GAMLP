@@ -5,6 +5,8 @@
  */
 package GA;
 
+import Forecaster.AbstractIndividualFactory;
+
 /**
  *
  * @author sebastian
