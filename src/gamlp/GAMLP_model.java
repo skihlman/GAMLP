@@ -6,7 +6,7 @@
 package gamlp;
 
 import Forecaster.ForecastModel;
-import Forecaster.SaveInfo;
+import helpFunction.SaveInfo;
 import GA.*;
 
 /**

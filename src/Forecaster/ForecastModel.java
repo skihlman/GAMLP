@@ -5,6 +5,8 @@
  */
 package Forecaster;
 
+import helpFunction.SaveInfo;
+
 /**
  *
  * @author sebastian

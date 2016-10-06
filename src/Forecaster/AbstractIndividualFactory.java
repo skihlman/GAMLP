@@ -5,6 +5,7 @@
  */
 package Forecaster;
 
+import helpFunction.SaveObject;
 import GA.AbstractIndividual;
 
 /**

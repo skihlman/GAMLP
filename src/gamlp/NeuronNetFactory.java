@@ -7,7 +7,7 @@ package gamlp;
 
 import GA.AbstractIndividual;
 import Forecaster.AbstractIndividualFactory;
-import Forecaster.SaveObject;
+import helpFunction.SaveObject;
 
 /**
  *
