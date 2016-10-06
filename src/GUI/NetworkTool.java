@@ -35,10 +35,10 @@ public class NetworkTool extends JPanel {
     
     // Constructor taking NeuronNet as argument
     NetworkTool(NeuronNet net) {
-        //this.setPreferredSize(new Dimension(600, 200));
+        this.setLayout(new GridBagLayout());
+        this.setMinimumSize(new Dimension(600, 200));
         this.net = net;
         nIllustrator = new NetworkIllustrator(net);
-        this.setLayout(new GridBagLayout());
         int inputs = net.numInputs();
         int outputs = net.numOutputs();
         int cols = Math.max(inputs, outputs);

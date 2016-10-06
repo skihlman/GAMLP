@@ -20,8 +20,8 @@ public class LeftPanel extends JPanel {
     
     public LeftPanel() {
         super();
-        //this.setPreferredSize(new Dimension(300, 0));
-        this.setMinimumSize(new Dimension(200, 0));
+        this.setPreferredSize(new Dimension(100, 0));
+        this.setMinimumSize(new Dimension(100, 0));
         this.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
     }
 }

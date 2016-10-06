@@ -26,8 +26,9 @@ public class GAMLP_model extends ForecastModel {
         
     }
     
-    public SaveObject save(SaveInfo saveInfo) {
+    public void saveAs(SaveInfo saveInfo) {
         SaveObject saveObject = new SaveObject(saveInfo);
+        
     }
     
     public void doGA() {

@@ -5,9 +5,7 @@
  */
 package GUI;
 
-import gamlp.NeuronNet;
 import gamlp.NeuronNetFactory;
-import gamlp.WeightArray;
 import java.awt.GridBagConstraints;
 import static java.awt.GridBagConstraints.*;
 import java.awt.GridBagLayout;
@@ -45,7 +43,8 @@ public class TestGUI extends javax.swing.JFrame {
     private void initComponents() {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         // Set layout
-        this.setLayout(new GridBagLayout());
+        this.getContentPane().setLayout(new GridBagLayout());
+        this.setLocationRelativeTo(null); //centering frame
         GridBagConstraints c = new GridBagConstraints();
         
         // Create the panels
@@ -55,50 +54,52 @@ public class TestGUI extends javax.swing.JFrame {
         mainPanel = new MainPanel();
         
         // Create and initialize tools
-        netTool = new NetworkTool(new NeuronNetFactory(2, 2).create());
+        netTool = new NetworkTool(new NeuronNetFactory(7, 2).create());
         //netTool.setPreferredSize(new java.awt.Dimension(600, 300));
         
         // Add panels
         c.gridx = 0;
         c.gridy = 0;
         c.weightx = 1;
-        c.weighty = 0.1;
-        c.anchor = NORTH;
+        c.weighty = 0.0;
+        c.anchor = PAGE_START;
         c.fill = BOTH;
         c.gridheight = 1;
         c.gridwidth = 2;
-        this.getContentPane().add(topPanel);
+        this.getContentPane().add(topPanel, c);
         c.gridx = 0;
         c.gridy = 1;
         c.weightx = 0.2;
-        c.weighty = 0.9;
+        c.weighty = 1.0;
         c.gridheight = 2;
-        c.anchor = WEST;
+        c.anchor = FIRST_LINE_START;
         c.fill = BOTH;
         c.gridheight = 2;
         c.gridwidth = 1;
-        this.getContentPane().add(leftPanel);
+        this.getContentPane().add(leftPanel, c);
         c.gridx = 1;
         c.gridy = 1;
         c.weightx = 0.8;
-        c.weighty = 0.6;
-        c.anchor = EAST;
+        c.weighty = 0.8;
+        c.anchor = CENTER;
         c.fill = BOTH;
         c.gridheight = 1;
         c.gridwidth = 1;
-        this.getContentPane().add(mainPanel);
-        c.gridx = 0;
+        this.getContentPane().add(mainPanel, c);
+        c.gridx = 1;
         c.gridy = 2;
         c.weightx = 0.8;
-        c.weighty = 0.3;
-        c.anchor = SOUTH;
+        c.weighty = 0.2;
+        c.anchor = PAGE_END;
         c.fill = BOTH;
         c.gridheight = 1;
         c.gridwidth = 1;
-        this.getContentPane().add(bottomPanel);
+        this.getContentPane().add(bottomPanel, c);
         
         // Add content to panels
+        c = new GridBagConstraints();
         c.fill = BOTH;
+        c.anchor = CENTER;
         c.gridx = 0;
         c.gridy = 0;
         c.weightx = 1;

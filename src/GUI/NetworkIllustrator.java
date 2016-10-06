@@ -2,6 +2,7 @@ package GUI;
 
 import gamlp.NeuronNet;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -39,7 +40,8 @@ public class NetworkIllustrator extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // Buiding the GUI
     private void initComponents() {
-
+        this.setMinimumSize(new Dimension(400, 400));
+        //this.setPreferredSize(new Dimension(400, 400));
         setBackground(new java.awt.Color(255, 255, 255));
         setAutoscrolls(true);
         setFont(new java.awt.Font("Arial", 0, 10)); 

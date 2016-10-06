@@ -18,8 +18,8 @@ public class BottomPanel extends JPanel{
     
     public BottomPanel() {
         super();
-        //this.setPreferredSize(new Dimension(0, 400));
-        this.setMinimumSize(new Dimension(0, 300));
+        this.setPreferredSize(new Dimension(0, 100));
+        this.setMinimumSize(new Dimension(0, 100));
         this.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
     }
 }

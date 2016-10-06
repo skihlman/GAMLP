@@ -18,8 +18,8 @@ public class TopPanel extends JPanel{
     
     public TopPanel() {
         super();
-        //this.setPreferredSize(new Dimension(0, 100));
-        this.setMinimumSize(new Dimension(0, 200));
+        //this.setPreferredSize(new Dimension(800, 100));
+        this.setPreferredSize(new Dimension(0, 50));
         this.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
     }
 }
