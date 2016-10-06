@@ -12,5 +12,21 @@ import java.util.ArrayList;
  * @author sebastian
  */
 public class SaveObject extends ArrayList<String> {
+    private SaveInfo saveInfo;
     
+    public SaveObject(SaveInfo info) {
+        set(info);
+    }
+    
+    private void set(SaveInfo info) {
+        saveInfo = info;
+    }
+    
+    public void setSaveInfo(SaveInfo info) {
+        set(info);
+    }
+    
+    public SaveInfo getSaveInfo() {
+        return saveInfo;
+    }
 }

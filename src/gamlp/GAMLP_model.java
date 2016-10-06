@@ -8,6 +8,7 @@ package gamlp;
 import Forecaster.ForecastModel;
 import helpFunction.SaveInfo;
 import GA.*;
+import helpFunction.SaveObject;
 
 /**
  *
@@ -25,8 +26,8 @@ public class GAMLP_model extends ForecastModel {
         
     }
     
-    public void save(SaveInfo saveInfo) {
-        
+    public SaveObject save(SaveInfo saveInfo) {
+        SaveObject saveObject = new SaveObject(saveInfo);
     }
     
     public void doGA() {
