@@ -94,7 +94,7 @@ public class Population extends ArrayList<AbstractIndividual> {
     }
     
     // Return an individual based on p from a cumulative distribution of fitness
-    private AbstractIndividual get(double p) {
+    public AbstractIndividual get(double p) {
         if (p < 0 || p > 1)
             return null;
         double fSum = 0;

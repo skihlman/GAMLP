@@ -7,6 +7,7 @@ package Data;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  *
@@ -48,6 +49,18 @@ public class DataSet extends ArrayList<TrainingObservation> {
         TrainingObservation obs = new TrainingObservation(val, teachingLen, id);
         return add(obs);
     }
+    
+    public boolean add(double[] val) {
+        int id;
+        if (val.length == observationLen + 1) { // Use first number as id
+            id = (int)val[0];
+            val = Arrays.copyOfRange(val, 1, val.length - 1);
+        }
+        else // Use internal next id
+            id = nextID();
+        TrainingObservation obs = new TrainingObservation(val, teachingLen, id);
+        return add(obs);
+    }
         
     private int nextID() {
         int retVal = this.nextID;
@@ -75,5 +88,17 @@ public class DataSet extends ArrayList<TrainingObservation> {
         int tLen = obs.getT().length;
         int len = obs.get().length + tLen;
         return len == observationLen && tLen == teachingLen;
+    }
+    
+    public int length() {
+        return observationLen;
+    }
+    
+    public int inputLength() {
+        return observationLen - teachingLen;
+    }
+    
+    public int teachingLength() {
+        return teachingLen;
     }
 }

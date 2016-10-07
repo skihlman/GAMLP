@@ -14,6 +14,7 @@ import java.awt.GridBagLayout;
  *
  * @author sebastian
  */
+
 public class TestGUI extends javax.swing.JFrame {
     
     // Variables declaration
@@ -25,7 +26,6 @@ public class TestGUI extends javax.swing.JFrame {
         
     // Tools
     private NetworkTool netTool;
-    
     
     // End of variables declaration
 
