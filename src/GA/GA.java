@@ -5,8 +5,6 @@
  */
 package GA;
 
-import Forecaster.AbstractIndividualFactory;
-
 /**
  *
  * @author sebastian
@@ -30,10 +28,18 @@ public class GA {
     }
     
     public final void generatePopulation() {
+        // If population was previously empty we reset generation
+        if (population.isEmpty())
+            generation = 0;
+        // Fill the generation up with randomly generated individuals 
         while (population.size() < settings.populationSize) {
             population.add(factory.create());
         }
-        generation = 0;
+        
+    }
+    
+    public int getGeneration() {
+        return generation;
     }
     
     public Population getPopulation() {
@@ -45,9 +51,17 @@ public class GA {
     }
     
     public void setPopulation(Population pop) {
-        this.population = pop;
+        population = pop;
+        population.sort();
+        // Adjust the size of the new populatione if needed
+        while (population.size() < settings.populationSize)
+            population.add(factory.create());
+        while (population.size() > settings.populationSize)
+            population.remove(settings.populationSize);
+        // As population doesn't know it's generation, set generation to zero
         generation = 0;
     }
+    
     
     public void set(GASettings set) {
         this.settings = set;
@@ -56,6 +70,13 @@ public class GA {
     // Perform GA - i.e. a generation shift
     public void generationShift() {
         population.sort();
+        
+        // ********************************************
+        // * Perform the genetic algorithm here!!!    *
+        // ********************************************
+        
+        // Increment the generation
+        generation++;
     }
     
     
