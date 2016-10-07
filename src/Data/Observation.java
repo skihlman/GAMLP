@@ -10,7 +10,7 @@ package Data;
  * @author sebastian
  */
 public class Observation {
-    private double[] value;
+    private final double[] value;
     
     public Observation(double[] val) {
         value = val;

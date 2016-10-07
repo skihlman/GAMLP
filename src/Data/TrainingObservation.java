@@ -12,15 +12,29 @@ import java.util.Arrays;
  * @author sebastian
  */
 public class TrainingObservation extends Observation {
-    private double[] teachingInput;
-    private int id;
+    private final double[] teachingInput;
+    private final int id;
 
     public TrainingObservation(double[] val, int teachingLength, int id) {
-        super(Arrays.copyOf(val, val.length - teachingLength));
+        super(Arrays.copyOf(val, val.length - Math.min(val.length - 1, Math.max(1, teachingLength))));
         int inpLen = super.get().length;
         int fullLen = val.length;
         teachingInput = Arrays.copyOfRange(val, inpLen, fullLen);
         this.id = id;
     }
     
+    
+    public double[] getT() {
+        return teachingInput;
+    }
+    
+    public double getT(int index) {
+        if (index >= 0 && index < teachingInput.length)
+            return teachingInput[index];
+        return 0;
+    }
+    
+    public int getID() {
+        return id;
+    }
 }
