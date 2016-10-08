@@ -108,4 +108,11 @@ public class Population extends ArrayList<AbstractIndividual> {
         // This sould never happen...
         return this.get(this.size() - 1);
     }
+    
+    // Return the populations average fitness
+    public double averageFitness(boolean check) {
+        if (check) // update the fitness sum in case a network has been changed
+            updateFitnessSum();
+        return fitnessSum / this.size();
+    } 
 }

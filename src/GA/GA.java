@@ -5,6 +5,8 @@
  */
 package GA;
 
+import static GA.GASettings.*;
+
 /**
  *
  * @author sebastian
@@ -70,14 +72,114 @@ public class GA {
     // Perform GA - i.e. a generation shift
     public void generationShift() {
         population.sort();
-        
+        Population fertilePopulation = getFertilePopulation();
         // ********************************************
         // * Perform the genetic algorithm here!!!    *
         // ********************************************
+        kill();
+        repopulate(fertilePopulation);
         
         // Increment the generation
         generation++;
     }
     
+    // Get the part of the population that is fertile (as the base for next generation)
+    private Population getFertilePopulation() {
+        Population fertilePopulation = new Population();
+        double avgFitness = population.averageFitness(true);
+        boolean stop = false;
+        int index = 0;
+        /* 
+         *  calculate how many individuals to inlude into the fertile population
+        */
+        while (!stop && index < population.size()) {
+            switch (settings.fertilityCondition()) {
+                case ANY:
+                    stop = (settings.useFertileAvgFitnessFactorLimit && 
+                            population.get(index).fitness() < 
+                            settings.fertileAvgFitnessFactorLimit * avgFitness)
+                            && 
+                            (settings.useFertileFitnessLimit && 
+                            population.get(index).fitness() < 
+                            settings.fertileFitnessLimit)
+                            &&
+                            (settings.useFertilePercentile && 
+                            (double)index / population.size() > 
+                            settings.fertilePercentile);
+                    break;
+                case ALL:
+                    stop = (settings.useFertileAvgFitnessFactorLimit && 
+                            population.get(index).fitness() < 
+                            settings.fertileAvgFitnessFactorLimit * avgFitness)
+                            || 
+                            (settings.useFertileFitnessLimit && 
+                            population.get(index).fitness() < 
+                            settings.fertileFitnessLimit)
+                            ||
+                            (settings.useFertilePercentile && 
+                            (double)index / population.size() > 
+                            settings.fertilePercentile);
+                    break;
+                default:
+                    // Should not happen... :)
+                    
+            }
+            if (!stop)
+                fertilePopulation.add(population.get(index));
+            index++;
+        }
+        return fertilePopulation;
+    }
     
+    // Kill all individuals in the population, except the survivors
+    private void kill() {
+        double avgFitness = population.averageFitness(true);
+        boolean stop = false;
+        int index = population.size();
+        
+        while (!stop && index >= 0) {
+            switch (settings.fertilityCondition()) {
+                case ANY:
+                    stop = (settings.useSurvivalAvgFitnessFactorLimit && 
+                            population.get(index).fitness() > 
+                            settings.survivalAvgFitnessFactorLimit * avgFitness)
+                            || 
+                            (settings.useSurvivalFitnessLimit && 
+                            population.get(index).fitness() > 
+                            settings.survivalFitnessLimit)
+                            ||
+                            (settings.useSurvivalPercentile && 
+                            (double)index / population.size() < 
+                            settings.survivalPercentile);
+                    break;
+                case ALL:
+                    stop = (settings.useSurvivalAvgFitnessFactorLimit && 
+                            population.get(index).fitness() > 
+                            settings.survivalAvgFitnessFactorLimit * avgFitness)
+                            && 
+                            (settings.useSurvivalFitnessLimit && 
+                            population.get(index).fitness() > 
+                            settings.survivalFitnessLimit)
+                            &&
+                            (settings.useSurvivalPercentile && 
+                            (double)index / population.size() < 
+                            settings.survivalPercentile);
+                    break;
+                default:
+                    // Should not happen... :)
+                    
+            }
+            if (!stop)
+                population.remove(index);
+            index--;
+        }
+    }
+    
+    private void repopulate(Population fertilePopulation) {
+        // Repopulate the population until it reaches it's right size
+        while (population.size() < settings.populationSize) {
+            
+        }
+        population.sort();
+    }
 }
