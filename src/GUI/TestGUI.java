@@ -5,10 +5,13 @@
  */
 package GUI;
 
+import Data.DataSet;
 import gamlp.NeuronNetFactory;
 import java.awt.GridBagConstraints;
 import static java.awt.GridBagConstraints.*;
 import java.awt.GridBagLayout;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -53,9 +56,13 @@ public class TestGUI extends javax.swing.JFrame {
         bottomPanel = new BottomPanel();
         mainPanel = new MainPanel();
         
-        // Create and initialize tools
-        netTool = new NetworkTool(new NeuronNetFactory(7, 2).create());
-        //netTool.setPreferredSize(new java.awt.Dimension(600, 300));
+        try {
+            // Create and initialize tools
+            netTool = new NetworkTool(new NeuronNetFactory(new DataSet(new String[] {"in1", "in2", "in3", "out1", "out2"}, 2)).create());
+            //netTool.setPreferredSize(new java.awt.Dimension(600, 300));
+        } catch (Exception ex) {
+            // Do nothing
+        }
         
         // Add panels
         c.gridx = 0;

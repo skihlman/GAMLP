@@ -5,6 +5,8 @@
  */
 package gamlp;
 
+import Data.DataSet;
+
 
 /**
  *
@@ -12,8 +14,8 @@ package gamlp;
  */
 public class FFNetwork extends NeuronNet{
     
-    FFNetwork(int[] npl) {
-        super(new WeightArray(npl));
+    FFNetwork(int[] npl, DataSet sample) {
+        super(new WeightArray(npl), sample);
     }
     
     

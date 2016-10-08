@@ -91,6 +91,7 @@ public class GA {
         int index = 0;
         /* 
          *  calculate how many individuals to inlude into the fertile population
+         *  limits inclusive!
         */
         while (!stop && index < population.size()) {
             switch (settings.fertilityCondition()) {
@@ -136,7 +137,8 @@ public class GA {
         double avgFitness = population.averageFitness(true);
         boolean stop = false;
         int index = population.size();
-        
+        // Kill (remove) individuals who doesn't "fit" according to constraints
+        // Need to be better than constraints to survive
         while (!stop && index >= 0) {
             switch (settings.fertilityCondition()) {
                 case ANY:
@@ -175,6 +177,7 @@ public class GA {
         }
     }
     
+    // Create new individuals
     private void repopulate(Population fertilePopulation) {
         // Repopulate the population until it reaches it's right size
         while (population.size() < settings.populationSize) {

@@ -5,6 +5,7 @@
  */
 package gamlp;
 
+import Data.DataSet;
 import GA.AbstractIndividual;
 import GA.AbstractIndividualFactory;
 import helpFunction.SaveObject;
@@ -14,30 +15,22 @@ import helpFunction.SaveObject;
  * @author sebastian
  */
 public class NeuronNetFactory extends AbstractIndividualFactory{
-    private int inputs;
-    private int outputs;
+    private final int inputs;
+    private final int outputs;
+    private final DataSet trainingSample;
     
-    public NeuronNetFactory() {
-        this(1, 1);
+    
+    public NeuronNetFactory(DataSet sample) {
+        inputs = sample.inputLength();
+        outputs = sample.teachingLength();
+        trainingSample = sample;
     }
     
-    public NeuronNetFactory(int in, int out) {
-        inputs = in;
-        outputs = out;
-    }
-    
-    public void setInputs(int in) {
-        inputs = in;
-    }
-    
-    public void setOutputs(int out) {
-        outputs = out;
-    }
     
     @Override
     public NeuronNet create() {
         WeightArray weights = new WeightArray(inputs, outputs);
-        NeuronNet net = new NeuronNet(weights);
+        NeuronNet net = new NeuronNet(weights, trainingSample);
         return net;
     }
 

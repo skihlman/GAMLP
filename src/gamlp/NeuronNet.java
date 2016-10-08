@@ -5,6 +5,7 @@
  */
 package gamlp;
 
+import Data.DataSet;
 import GA.AbstractChromosome;
 import GA.AbstractIndividual;
 
@@ -15,10 +16,12 @@ import GA.AbstractIndividual;
 public class NeuronNet extends AbstractIndividual {
     private Neuron[][] neuron;
     private WeightArray weights;
+    private DataSet trainingSample;
     
     // Constructor
-    public NeuronNet(WeightArray w) {
+    public NeuronNet(WeightArray w, DataSet sample) {
         weights = w;
+        trainingSample = sample;
         set();
     }
     

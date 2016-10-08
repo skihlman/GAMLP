@@ -90,7 +90,7 @@ public class DataSet extends ArrayList<TrainingObservation> {
         return len == observationLen && tLen == teachingLen;
     }
     
-    public int length() {
+    public int observationLength() {
         return observationLen;
     }
     
