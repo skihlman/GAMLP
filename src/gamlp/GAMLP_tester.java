@@ -14,16 +14,8 @@ import GUI.TestGUI;
 public class GAMLP_tester {
     
     public static void main(String[] args) {
-        //nonsenseTestCode();
-        final TestGUI GUI = new TestGUI();
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                //NeuronNet net = new NeuronNet(3, 2);
-                GUI.setVisible(true);
-            }
-        });
+        nonsenseTestCode();
+        
     }
     
     // This method contains the current code to be tested. Change as you like
@@ -47,7 +39,19 @@ public class GAMLP_tester {
         double[] in = new double[]{0, 0, 0};
         double[] out = net.getOutput(in);
         for (double d : out)
-            System.out.println(d + " ");*/
+            System.out.println(d + " ");
+        
+        final TestGUI GUI = new TestGUI();
+        // Create and display the form 
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                //NeuronNet net = new NeuronNet(3, 2);
+                GUI.setVisible(true);
+            }
+        });
+        
+        */
                 
     }
     
