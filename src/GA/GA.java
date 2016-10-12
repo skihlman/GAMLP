@@ -181,7 +181,7 @@ public class GA {
     private void repopulate(Population fertilePopulation) {
         // Repopulate the population until it reaches it's right size
         while (population.size() < settings.populationSize) {
-            
+            double rndIndex = Math.random();
         }
         population.sort();
     }

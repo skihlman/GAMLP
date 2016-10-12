@@ -16,6 +16,20 @@ public class GASettings {
     private double pMutation;
     // population size
     public int populationSize;
+    /*
+    // Type of Crossover gene selction and the crossover sd used if random
+    
+    Non-random crossover sets a specific gene in the child as either of the
+    parents respective genes. Random crossover sets the childs gene as a random 
+    normally distributed value with mean at the average between the parents 
+    genes and an standard deviation of 
+    [randomCrossoverSD * parent1_gene - parent2_gene].
+    A value between 0.1 and 1 is recommended for randomCrossoverSD. Higher
+    values might lead to instable crossover with less convergence. Lower values
+    will work but will deplete the genetic diversity
+    */
+    public double pCrossoverIsRandom; 
+    public double randomCrossoverSD;
     // Mutation rates (general applys to all, specific only to mutated individuals)
     public double generalMutationRate;
     public double generalMutationSD;
@@ -58,6 +72,9 @@ public class GASettings {
     
     public static final int DEFAULT_POPULATION_SIZE = 100;
     
+    public static final double DEFAULT_P_RANDOM_CROSSOVER = 0.67;
+    public static final double DEFAULT_CROSSOVER_SD = 0.4;
+    
     public static final double DEFAULT_GENERAL_MUTATION_RATE = 0.01;
     public static final double DEFAULT_GENERAL_MUTATION_SD = 0.01;
     public static final double DEFAULT_GENERAL_MUTATION_P_STRUCTURE_CHANGE = 0.001;
@@ -88,6 +105,9 @@ public class GASettings {
         setGAProbabilities(DEFAULT_P_CROSSOVER, DEFAULT_P_CLONE, DEFAULT_P_MUTATION);
         // set size of population
         populationSize = DEFAULT_POPULATION_SIZE;
+        // The crossover parameters
+        pCrossoverIsRandom = DEFAULT_P_RANDOM_CROSSOVER; 
+        randomCrossoverSD = DEFAULT_CROSSOVER_SD;
         // Mutation rates (general applys to all, specific only to mutated individuals)
         generalMutationRate = DEFAULT_GENERAL_MUTATION_RATE;
         generalMutationSD = DEFAULT_GENERAL_MUTATION_SD;
