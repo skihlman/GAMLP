@@ -6,6 +6,7 @@
 package gamlp;
 
 import Data.DataSet;
+import GA.AbstractChromosome;
 import GA.AbstractIndividual;
 import GA.AbstractIndividualFactory;
 import helpFunction.SaveObject;
@@ -37,6 +38,11 @@ public class NeuronNetFactory extends AbstractIndividualFactory{
     @Override
     public AbstractIndividual create(SaveObject saveObject) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public AbstractIndividual create(AbstractChromosome chromosome) {
+        return new NeuronNet((WeightArray)chromosome, trainingSample);
     }
     
 }

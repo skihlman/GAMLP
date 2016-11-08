@@ -23,7 +23,7 @@ public class GASettings {
     parents respective genes. Random crossover sets the childs gene as a random 
     normally distributed value with mean at the average between the parents 
     genes and an standard deviation of 
-    [randomCrossoverSD * parent1_gene - parent2_gene].
+    [randomCrossoverSD * (parent1_gene - parent2_gene)].
     A value between 0.1 and 1 is recommended for randomCrossoverSD. Higher
     values might lead to instable crossover with less convergence. Lower values
     will work but will deplete the genetic diversity
@@ -196,7 +196,7 @@ public class GASettings {
         return pCrossover;
     }
     
-    public double pClon() {
+    public double pClone() {
         return pClone;
     }
     

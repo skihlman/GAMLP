@@ -16,6 +16,7 @@ import java.util.ArrayList;
 public class WeightArray extends AbstractChromosome {
     private final int inputs;
     private final int outputs;
+    private int[] npl;
     private ArrayList<ArrayList<ArrayList<Double>>> weights;
     
     public static final int MAX_HIDDEN_LAYERS = 3;
@@ -27,7 +28,8 @@ public class WeightArray extends AbstractChromosome {
     public WeightArray(int in, int out) {
         this.inputs = in;
         this.outputs = out;
-        generateWeights(createNPL());
+        npl = createNPL();
+        generateWeights(npl);
     }
     
     public WeightArray(int[] npl) {
@@ -47,6 +49,21 @@ public class WeightArray extends AbstractChromosome {
         return npl;
     }
     
+    private int[] createNPL(int[] npl1, int[] npl2) {
+        int minL = Math.min(npl1.length, npl2.length);
+        int maxL = Math.max(npl1.length, npl2.length);       
+        int layers = helpFunction.Distribution.equalInt(minL, maxL) + minL;
+        int[] npl = new int[layers];
+        npl[0] = inputs + 1; // Threshold neuron
+        npl[layers - 1] = outputs; // No threshold neuron
+        for (int l = 1;  l < layers - 1; l++) {
+            int minN = Math.min(npl1[l], npl2[l]);            
+            int maxN = Math.max(npl1[l], npl2[l]);
+            npl[l] = minN + Distribution.equalInt(minN, maxN);
+        }
+        return npl;
+    }
+    
     private void generateWeights(int[] npl) {
         int layers = npl.length;
         weights = new ArrayList<>();
@@ -56,14 +73,16 @@ public class WeightArray extends AbstractChromosome {
                 weights.get(l).add(new ArrayList<Double>());
                 int thInNextLayer = l < layers - 2 ? 1 : 0;
                 for (int c = 0; c < npl[l + 1] - thInNextLayer; c++) {
-                    double w = Distribution.normal(WEIGHT_MEAN, WEIGHT_SD);
+                    double w = createWeight();
                     weights.get(l).get(n).add(w);
                 }
             }
         }        
     }
     
-    
+    public double createWeight() {
+        return Distribution.normal(WEIGHT_MEAN, WEIGHT_SD);
+    }
     
     public double get(int layer, int neuron, int weightNum) {
         // Try to return the weight based on layer, neuron and weight no indices
@@ -78,7 +97,7 @@ public class WeightArray extends AbstractChromosome {
     }
     
     public void set(int layer, int neuron, int weightNum, double weight) {
-        // Try to set the weight based on layer, neuron and weight no indices
+        // Try to set the weight based on layer, neuron and weight no. indices
         try {
             weights.get(layer).get(neuron).set(weightNum, weight);
         }
@@ -101,13 +120,6 @@ public class WeightArray extends AbstractChromosome {
     }
     
     public int[] getNPL() {
-        int npl[];
-        int layers = weights.size() + 1;
-        npl = new int[layers];
-        //npl[0] = inputs;
-        for (int i = 0; i < layers - 1; i++)
-            npl[i] = weights.get(i).size();
-        npl[layers - 1] = outputs;
         return npl;
     }
     
@@ -123,10 +135,40 @@ public class WeightArray extends AbstractChromosome {
         }
         return maxSum;
     }
+    
+    public int numLayers() {
+        return this.weights.size();
+    }
+    
+    private double getRandW(double val1, double val2, double sd) {
+        double mean = (val1 + val2) / 2;
+        double dist = Math.abs(val1 - mean);
+        double newDist = dist * sd;
+        return mean + newDist;
+    }
+    
+    private double getRandW(double val1, double val2) {
+        return Math.random() < 0.5 ? val1 : val2;
+    }
 
     @Override
-    public WeightArray recombine(AbstractChromosome partner) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public WeightArray recombine(AbstractChromosome partner, double pRandom, double sd) {
+        WeightArray wPartner = (WeightArray)partner;
+        int[] npl = createNPL(this.getNPL(), wPartner.getNPL());
+        int layers = npl.length;
+        WeightArray child = new WeightArray(npl);
+        for (int l = 0; l < layers - 1; l++) {
+            for (int n = 0; n < npl[l]; n++) {
+                int thInNextLayer = l < layers - 2 ? 1 : 0;
+                for (int c = 0; c < npl[l + 1] - thInNextLayer; c++) {
+                    double w = (Math.random() < pRandom) ?
+                            getRandW(this.get(l, n, c), wPartner.get(l, n, c), sd) :
+                            getRandW(this.get(l, n, c), wPartner.get(l, n, c));
+                    child.set(l, n, c, w);
+                }
+            }
+        }     
+        return child;
     }
     
     @Override
@@ -139,10 +181,30 @@ public class WeightArray extends AbstractChromosome {
         return copy;
     }
 
+    /* 
+    Only weights are mutated by adding to the weight value from a normal 
+    distribution with mean 0 and sd.
+    Not yet implemented is the structural change part of the mutation.
+    */
     @Override
-    public WeightArray mutate() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public WeightArray mutate(double rate, double sd, double pStructureChange) {
+        int layers = npl.length;
+        for (int l = 0; l < layers - 1; l++) {
+            for (int n = 0; n < npl[l]; n++) {
+                int thInNextLayer = l < layers - 2 ? 1 : 0;
+                for (int c = 0; c < npl[l + 1] - thInNextLayer; c++) {
+                    if (Math.random() < rate) {
+                        double w = weights.get(l).get(n).get(c);
+                        w += helpFunction.Distribution.normal(0, sd);
+                        this.set(l, n, c, w);
+                    }
+                }
+            }
+        }
+        return this;
     }
+    
+    
 
     
 }

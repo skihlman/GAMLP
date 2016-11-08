@@ -13,7 +13,9 @@ public abstract class AbstractChromosome {
     @Override
     public abstract AbstractChromosome clone();
     
-    public abstract AbstractChromosome mutate();
+    public abstract AbstractChromosome mutate(double rate, double sd, 
+            double pStructureChange);
     
-    public abstract AbstractChromosome recombine(AbstractChromosome partner);
+    public abstract AbstractChromosome recombine(AbstractChromosome partner, 
+            double pRandom, double sd);
 }

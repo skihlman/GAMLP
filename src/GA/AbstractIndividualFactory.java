@@ -15,4 +15,5 @@ import GA.AbstractIndividual;
 public abstract class AbstractIndividualFactory {
     public abstract AbstractIndividual create();
     public abstract AbstractIndividual create(SaveObject saveObject);
+    public abstract AbstractIndividual create(AbstractChromosome chromosome);
 }
