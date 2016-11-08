@@ -52,6 +52,7 @@ public class GA {
         return settings;
     }
     
+    // Warning!! By calling this method the previous population is disgarded!
     public void setPopulation(Population pop) {
         population = pop;
         population.sort();
@@ -177,12 +178,53 @@ public class GA {
         }
     }
     
+    
     // Create new individuals
     private void repopulate(Population fertilePopulation) {
+        // Ensure that the fertile population is big enough to accomodate crossover
+        while (fertilePopulation.size() < 2) {
+            fertilePopulation.add(factory.create());
+        }
         // Repopulate the population until it reaches it's right size
         while (population.size() < settings.populationSize) {
-            double rndIndex = Math.random();
+            double rndPropagationType = Math.random();
+            double rndParent = Math.random();
+            AbstractChromosome chromosome = 
+                        fertilePopulation.get(rndParent).getChromosome();
+            AbstractChromosome childChromosome;
+            if (rndPropagationType < settings.pCrossover()) {
+                double rndParent2 = Math.random();
+                /* We are not checking whether parent 2 is the same as parent 1, 
+                which means parent 1 can have a child with itself. This is 
+                basically the same as a clone. A check could be implemented, 
+                but would eat resources. For large populations the effect is
+                negligable
+                */
+                AbstractChromosome chromosome2 = 
+                        fertilePopulation.get(rndParent2).getChromosome();
+                childChromosome = chromosome.recombine(chromosome2, settings.pCrossoverIsRandom, settings.randomCrossoverSD);
+                
+            }
+            else if (rndPropagationType < settings.pCrossover() + settings.pClone()) {
+                // Cllone ... 
+                childChromosome = chromosome.clone();
+            }
+            else {
+                // Mutate ...
+                childChromosome = chromosome.mutate(settings.specificMutationRate, 
+                        settings.specificMutationSD, 
+                        settings.specificMutationPStructureChange);
+            }
+            // Mutate lightly
+            childChromosome.mutate(settings.generalMutationRate, 
+                    settings.generalMutationSD, 
+                    settings.generalMutationPStructureChange);
+            // Make a new individual based on the child chromosome
+            AbstractIndividual child = factory.create(childChromosome);
+            // Add the child to the population
+            population.add(child);
         }
+        
         population.sort();
     }
 }
